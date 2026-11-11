@@ -1,0 +1,55 @@
+/* Header.css */
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2933;
+}
+
+.header-nav {
+    display: flex;
+    gap: 24px;
+}
+
+.header-nav a {
+    color: #5f6368;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.header-nav a:hover,
+.header-nav a:focus-visible {
+    color: #1f2933;
+    border-bottom-color: #8ab4f8;
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .header-container {
+        padding: 0 12px;
+    }
+
+    .header-title {
+        font-size: 1.05rem;
+    }
+
+    .header-nav {
+        gap: 14px;
+    }
+}

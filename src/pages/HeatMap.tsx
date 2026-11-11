@@ -1,10 +1,18 @@
 import "./Heatmap.css"
+import Map from "../components/Map"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
 
 export default function HeatMap(){
 
     return (
-        <div className="heatmap-container">
-            <h1>Estou na página do HeatMap</h1>
-        </div>
+        <>
+        <Header></Header>
+
+        <Map></Map>
+        <Footer></Footer>
+        
+        </>
+        
     )
 }

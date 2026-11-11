@@ -1,10 +1,11 @@
-import "./Footer.css"
+import "./Footer.css";
 
-export default function Footer(){
-
+export default function Footer() {
     return (
-        <div className="footer-container">
-            <h1>Estou no componente footer</h1>
-        </div>
-    )
+        <footer className="footer-container">
+            <p className="footer-text">
+                © {new Date().getFullYear()} Mapa do Armazém. Todos os direitos reservados.
+            </p>
+        </footer>
+    );
 }

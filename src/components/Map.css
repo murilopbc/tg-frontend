@@ -1,0 +1,23 @@
+/* Map.css */
+
+.map-container {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f7fa;
+    padding: 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+/* Responsividade */
+@media (max-width: 768px) {
+    .map-container {
+        padding: 8px;
+    }
+
+    .map-container svg {
+        border-radius: 8px;
+    }
+}
