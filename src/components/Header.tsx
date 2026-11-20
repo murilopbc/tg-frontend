@@ -5,10 +5,7 @@ export default function Header() {
         <header className="header-container">
             <h1 className="header-title">HeatMap</h1>
 
-            <nav className="header-nav">
-                <a href="/">Início</a>
-               
-            </nav>
+    
         </header>
     );
 }

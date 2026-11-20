@@ -1,0 +1,44 @@
+.picking-table-wrapper {
+    max-height: 400px;
+    overflow: auto;
+    margin: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+}
+
+.picking-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.picking-table th,
+.picking-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.picking-table th {
+    position: sticky;
+    top: 0;
+    background: #f5f5f5;
+    z-index: 1;
+}
+
+.picking-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.curve-badge {
+    display: inline-block;
+    min-width: 24px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.curve-A { background: #E53935; color: #fff; }
+.curve-B { background: #FDD835; color: #000; }
+.curve-C { background: #43A047; color: #fff; }

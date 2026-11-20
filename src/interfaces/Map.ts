@@ -1,5 +1,5 @@
 export interface MapItem {
-    id: string;
+    id: number;
     x: string;
     y: string;
     type: boolean | string | number;
