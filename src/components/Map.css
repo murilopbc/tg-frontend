@@ -1,15 +1,25 @@
-.map-legend {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    margin-top: 8px;
-    font-size: 14px;
+.map-container {
+    height: 65vh;
+    min-height: 380px;
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
 }
 
-.map-legend i {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin-right: 4px;
-    border-radius: 2px;
+.map-container svg {
+    display: block;
+}
+
+/* leve destaque ao passar o mouse nas posições */
+.map-container rect {
+    transition: opacity 0.1s;
+}
+
+.map-container rect:hover {
+    opacity: 0.75;
+    stroke: #111827;
+    stroke-width: 1.5;
 }
