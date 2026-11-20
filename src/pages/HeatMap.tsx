@@ -45,6 +45,14 @@ export default function HeatMap() {
         return () => { cancelled = true; };
     }, [dataInicial, dataFinal, curva]);
 
+
+    const CURVE_COLORS: Record<string, string> = {
+        A: "#8E24AA", // Roxo
+        B: "#E53935", // Vermelho
+        C: "#FDD835", // Amarelo
+        D: "#43A047"  // Verde
+    };
+
     return (
         <>
             <Header />
@@ -80,6 +88,25 @@ export default function HeatMap() {
                         ))}
                     </select>
                 </label>
+            </div>
+
+            <div className="map-legend">
+                <span>
+                    <i style={{ background: CURVE_COLORS.A }} />
+                    Curva A: até 80% do total acumulado -  maior que {pickings[0]?.corte_Posicao_A}
+                </span>
+                <span>
+                    <i style={{ background: CURVE_COLORS.B }} />
+                    Curva B: de 80% a 90% -  maior que {pickings[0]?.corte_Posicao_B}
+                </span>
+                <span>
+                    <i style={{ background: CURVE_COLORS.C }} />
+                    Curva C: de 90% a 95% - maior que {pickings[0]?.corte_Posicao_C}
+                </span>
+                <span>
+                    <i style={{ background: CURVE_COLORS.D }} />
+                    Curva D: acima de 95% - maior que {pickings[0]?.corte_Posicao_D}
+                </span>
             </div>
 
             <Map pickings={pickings} nivel={nivel} />

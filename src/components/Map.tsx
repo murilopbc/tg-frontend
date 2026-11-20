@@ -11,12 +11,23 @@ const CURVE_COLORS: Record<string, string> = {
     A: "#8E24AA", // Roxo
     B: "#E53935", // Vermelho
     C: "#FDD835", // Amarelo
-    D: "#43A047"  // Verde
+    D: "#43A047", // Verde
 };
 
 interface MapProps {
     pickings: PickingItem[];
     nivel: number;
+}
+
+interface PositionInfo {
+    curva: string;
+    curvaLocations: string;
+    total: number;
+    corteA: number;
+    corteB: number;
+    corteC: number;
+    corteD: number;
+    items: PickingItem[];
 }
 
 const Map = ({ pickings, nivel }: MapProps) => {
@@ -49,14 +60,31 @@ const Map = ({ pickings, nivel }: MapProps) => {
         loadMap();
         return () => { cancelled = true; };
     }, [nivel]);
-    // Map_Id -> { curva, total }. A API devolve várias linhas por posição
-    // (produto/dia), mas curva e total são iguais em todas, então basta uma.
+
+    // Map_Id -> dados da posição + todos os produtos que passaram por ela.
+    // Curvas, total e cortes são iguais em todas as linhas da posição,
+    // então pego da primeira.
     const positionInfo = useMemo(() => {
-        const info: Record<number, { curva: string; total: number }> = {};
+        const info: Record<number, PositionInfo> = {};
         for (const p of pickings) {
             if (!info[p.map_Id]) {
-                info[p.map_Id] = { curva: p.curva_Posicao, total: p.total_Posicao };
+                info[p.map_Id] = {
+                    curva: p.curva_Posicao,
+                    curvaLocations: p.curva_Locations,
+                    total: p.total_Posicao,
+                    corteA: p.corte_Posicao_A,
+                    corteB: p.corte_Posicao_B,
+                    corteC: p.corte_Posicao_C,
+                    corteD: p.corte_Posicao_D,
+                    items: [],
+                };
             }
+            info[p.map_Id].items.push(p);
+        }
+
+        // produtos com maior quantidade primeiro
+        for (const key in info) {
+            info[key].items.sort((a, b) => b.quantity - a.quantity);
         }
         return info;
     }, [pickings]);
@@ -74,6 +102,23 @@ const Map = ({ pickings, nivel }: MapProps) => {
     const viewBoxY = (minY - padding) * CELL_HEIGHT;
     const viewBoxWidth = (maxX - minX + 1 + padding * 2) * CELL_WIDTH;
     const viewBoxHeight = (maxY - minY + 1 + padding * 2) * CELL_HEIGHT;
+
+    const SEPARADOR = "--------------------";
+
+    const buildTooltip = (item: MapItem, info: PositionInfo) =>
+        [
+            `Posição: ${item.street}${item.position}`,
+            `Total de acessos: ${info.total}`,
+            ...info.items.flatMap((p) => [
+                SEPARADOR,
+                `Produto: ${p.product}`,
+                `Acessos: ${p.quantity}`,
+                `Curva do produto: ${p.curva_Produto || "-"}`,
+                ...(p.fora_Do_Lugar === 1
+                    ? [`Curva sugerida: ${p.curva_Sugerida || "-"}`]
+                    : []),
+            ]),
+        ].join("\n");
 
     return (
         <div className="map-container">
@@ -93,7 +138,9 @@ const Map = ({ pickings, nivel }: MapProps) => {
 
                     const info = positionInfo[item.id];
                     const baseColor = isStorage ? "#FFFFFF" : "#D1E4FF";
-                    const fillColor = info ? CURVE_COLORS[info.curva] : baseColor;
+                    const fillColor = info
+                        ? CURVE_COLORS[info.curva] ?? baseColor
+                        : baseColor;
 
                     return (
                         <rect
@@ -106,22 +153,11 @@ const Map = ({ pickings, nivel }: MapProps) => {
                             stroke="#BDBDBD"
                             strokeWidth={0.5}
                         >
-                            {info && (
-                                <title>
-                                    {`${item.street}${item.position} | Curva ${info.curva} | ${info.total} acessos`}
-                                </title>
-                            )}
+                            {info && <title>{buildTooltip(item, info)}</title>}
                         </rect>
                     );
                 })}
             </svg>
-
-            <div className="map-legend">
-                <span><i style={{ background: CURVE_COLORS.A }} /> Curva A</span>
-                <span><i style={{ background: CURVE_COLORS.B }} /> Curva B</span>
-                <span><i style={{ background: CURVE_COLORS.C }} /> Curva C</span>
-                <span><i style={{ background: CURVE_COLORS.D }} /> Curva D</span>
-            </div>
         </div>
     );
 };

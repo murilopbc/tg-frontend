@@ -3,8 +3,14 @@ export interface PickingItem {
     curva_Produto: string;
     quantity: number;
     location: string;
-    createdAt: string;
     map_Id: number;
     total_Posicao: number;
-    curva_Posicao: "A" | "B" | "C" | "D";
+    curva_Locations: string;
+    curva_Posicao: string;
+    corte_Posicao_A: number;
+    corte_Posicao_B: number;
+    corte_Posicao_C: number;
+    corte_Posicao_D: number;
+    fora_Do_Lugar: number;
+    curva_Sugerida: string;
 }
