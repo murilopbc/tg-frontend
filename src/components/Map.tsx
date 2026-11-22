@@ -8,10 +8,9 @@ const CELL_WIDTH = 40;
 const CELL_HEIGHT = 20;
 
 const CURVE_COLORS: Record<string, string> = {
-    A: "#8E24AA", // Roxo
-    B: "#E53935", // Vermelho
-    C: "#FDD835", // Amarelo
-    D: "#43A047", // Verde
+    A: "#E53935", // Vermelho
+    B: "#FDD835", // Amarelo
+    C: "#43A047", // Verde
 };
 
 interface MapProps {
